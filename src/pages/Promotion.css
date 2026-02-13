@@ -1,0 +1,325 @@
+/* Promotion Page Styles */
+.promotion-container {
+    padding: 16px;
+    padding-bottom: 90px;
+    background-color: var(--primary-bg);
+    min-height: 100vh;
+    color: white;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Header */
+.promo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    animation: fadeInDown 0.6s ease-out;
+}
+
+.promo-header h2 {
+    font-size: 20px;
+    font-weight: 700;
+    background: linear-gradient(to right, #ffffff, #94a3b8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.qr-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #94a3b8;
+    font-size: 14px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.qr-link:hover {
+    color: white;
+}
+
+/* Top Stats Cards */
+.stats-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 24px;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.promo-stat-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s, background 0.3s;
+}
+
+.promo-stat-card:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.promo-stat-title {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #64748b;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.promo-stat-value {
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+/* Premium General Card */
+.premium-card {
+    background: rgba(30, 41, 59, 0.5);
+    /* Slate 800 roughly, as transparent */
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    margin-bottom: 24px;
+}
+
+/* Benefit Analysis Chart Section */
+.chart-section {
+    animation: fadeInUp 1s ease-out;
+}
+
+.section-title {
+    font-size: 16px;
+    margin-bottom: 24px;
+    font-weight: 700;
+    color: #f8fafc;
+}
+
+.chart-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    position: relative;
+}
+
+.chart-container::before {
+    content: '';
+    position: absolute;
+    width: 160px;
+    height: 160px;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+    z-index: 0;
+}
+
+/* Custom Tooltip Styling */
+.custom-chart-tooltip {
+    background: white;
+    padding: 8px 12px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    outline: none;
+}
+
+.tooltip-indicator {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+}
+
+.tooltip-name {
+    font-size: 11px;
+    font-weight: 600;
+    color: #475569;
+}
+
+.tooltip-value {
+    font-size: 11px;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+/* Team Stats Section Layout */
+.team-stats-container {
+    animation: fadeInUp 1.2s ease-out;
+}
+
+.query-date-text {
+    font-size: 14px;
+    font-weight: 600;
+    color: #cbd5e1;
+}
+
+.team-summary-section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.summary-label {
+    font-size: 13px;
+    color: #94a3b8;
+    font-weight: 500;
+}
+
+.summary-val {
+    font-size: 15px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.added-today-row {
+    margin-top: 8px;
+    display: flex;
+    gap: 8px;
+    font-size: 13px;
+    color: #94a3b8;
+    font-weight: 500;
+}
+
+.added-count {
+    color: #10b981;
+    font-weight: 700;
+}
+
+/* Level Cards Area */
+.levels-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.level-card {
+    margin-bottom: 0;
+    padding: 20px;
+    transition: all 0.3s ease;
+}
+
+.level-card:hover {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.level-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.level-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #f1f5f9;
+}
+
+.member-list-btn {
+    background: rgba(99, 102, 241, 0.1);
+    color: #818cf8;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.member-list-btn:hover {
+    background: rgba(99, 102, 241, 0.2);
+}
+
+.level-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.level-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.level-val {
+    font-size: 15px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.level-label {
+    font-size: 10px;
+    color: #64748b;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Grid for Desktop */
+@media (min-width: 1024px) {
+    .promotion-container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .stats-row {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+    }
+
+    .team-stats-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+    }
+
+    .level-card {
+        margin-bottom: 0;
+    }
+}

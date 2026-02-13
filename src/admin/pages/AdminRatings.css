@@ -1,0 +1,118 @@
+.admin-ratings-container {
+    padding: 24px;
+    background-color: #0f172a;
+    min-height: 100vh;
+    color: white;
+}
+
+.admin-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.back-btn,
+.refresh-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: none;
+    color: #94a3b8;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.back-btn:hover,
+.refresh-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.header-title {
+    flex: 1;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.ratings-table-wrapper {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    overflow: hidden;
+    overflow-x: auto;
+}
+
+.ratings-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.ratings-table th {
+    padding: 16px 24px;
+    background: rgba(255, 255, 255, 0.02);
+    color: #64748b;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.ratings-table td {
+    padding: 20px 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    font-size: 14px;
+    vertical-align: middle;
+}
+
+.user-info-cell {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.user-icon-bg {
+    width: 28px;
+    height: 28px;
+    background: rgba(99, 102, 241, 0.1);
+    color: #6366f1;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stars-cell {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.stars-count {
+    margin-left: 8px;
+    color: #94a3b8;
+    font-weight: 600;
+}
+
+.date-cell {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #94a3b8;
+}
+
+.loading-state,
+.empty-state {
+    text-align: center;
+    padding: 60px;
+    color: #64748b;
+    font-size: 16px;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 20px;
+}

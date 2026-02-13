@@ -1,0 +1,109 @@
+.levels-table-container {
+    background: rgba(30, 41, 59, 0.4);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    overflow: hidden;
+}
+
+.user-info-cell {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-main {
+    font-weight: 600;
+    color: #f1f5f9;
+    font-size: 14px;
+}
+
+.user-sub {
+    font-size: 11px;
+    color: #64748b;
+}
+
+.level-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+/* Level Themes */
+.level-badge.lvl-no-level {
+    background: rgba(148, 163, 184, 0.1);
+    color: #94a3b8;
+}
+
+.level-badge.lvl-trial {
+    background: rgba(16, 185, 129, 0.1);
+    color: #10b981;
+}
+
+.level-badge.lvl-1-star {
+    background: rgba(99, 102, 241, 0.1);
+    color: #6366f1;
+}
+
+.level-badge.lvl-2-star {
+    background: rgba(168, 85, 247, 0.1);
+    color: #a855f7;
+}
+
+.level-badge.lvl-3-star {
+    background: rgba(236, 72, 153, 0.1);
+    color: #ec4899;
+}
+
+.level-badge.lvl-4-star,
+.level-badge.lvl-5-star {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(239, 68, 68, 0.2) 100%);
+    color: #f59e0b;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.commission-cell,
+.income-cell {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.commission-amt {
+    font-weight: 700;
+    color: #10b981;
+}
+
+.income-amt {
+    font-weight: 700;
+    color: #6366f1;
+}
+
+.status-tag {
+    font-size: 11px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+.status-tag.active {
+    background: rgba(16, 185, 129, 0.1);
+    color: #10b981;
+}
+
+.status-tag.inactive {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+}
+
+.total-users-badge {
+    background: rgba(99, 102, 241, 0.1);
+    color: #6366f1;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+}

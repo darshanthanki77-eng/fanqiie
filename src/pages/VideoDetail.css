@@ -1,0 +1,203 @@
+/* Initial content for VideoDetail.css matching the modal requirement */
+/* Video Detail Page Styles */
+.video-detail-container {
+    background-color: var(--primary-bg);
+    min-height: 100vh;
+    padding-bottom: 20px;
+    color: white;
+}
+
+.detail-header-nav {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    z-index: 10;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+/* Main Video Hero */
+.video-hero-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+}
+
+.video-hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.play-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.play-btn-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Info Section */
+.detail-info-section {
+    padding: 16px;
+}
+
+.detail-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: white;
+}
+
+.score-btn {
+    width: 100%;
+    padding: 14px;
+    border-radius: 25px;
+    background: linear-gradient(90deg, #312e81 0%, #4c1d95 100%);
+    border: 1px solid #6366f1;
+    color: white;
+    font-size: 14px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+.score-btn:active {
+    transform: scale(0.98);
+}
+
+.meta-info {
+    font-size: 13px;
+    color: #94a3b8;
+    line-height: 1.6;
+    margin-bottom: 24px;
+}
+
+.meta-row {
+    display: flex;
+    margin-bottom: 4px;
+}
+
+.meta-label {
+    min-width: 80px;
+    color: #64748b;
+}
+
+.meta-val {
+    color: #cbd5e1;
+}
+
+/* Recommendations */
+.recommendation-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.thumb-icon {
+    color: #f472b6;
+}
+
+.rec-title {
+    font-size: 16px;
+    color: white;
+    font-weight: 600;
+}
+
+.rec-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+/* New Modal Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+    animation: fadeIn 0.3s ease;
+}
+
+.modal-content-premium {
+    background: white;
+    width: 100%;
+    max-width: 320px;
+    border-radius: 20px;
+    padding: 30px 20px;
+    text-align: center;
+    animation: scaleUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.modal-text {
+    color: #334155;
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 24px;
+    line-height: 1.5;
+}
+
+.modal-confirm-btn {
+    width: 100%;
+    padding: 12px;
+    border-radius: 25px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes scaleUp {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}

@@ -1,0 +1,389 @@
+/* VIP Page Styles */
+.vip-container {
+    padding: 16px;
+    padding-bottom: 90px;
+    background-color: var(--primary-bg);
+    min-height: 100vh;
+    animation: fadeIn 0.5s ease;
+}
+
+.vip-header {
+    margin-bottom: 24px;
+    animation: slideInDown 0.6s ease-out;
+}
+
+.vip-header h2 {
+    font-size: 20px;
+    color: white;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+/* Dashboard Card */
+.vip-dashboard {
+    background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+    border-radius: 20px;
+    padding: 24px 20px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 24px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    animation: scaleIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.vip-dashboard::before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    right: -10%;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, transparent 70%);
+    border-radius: 50%;
+    z-index: 1;
+}
+
+.vip-stats-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    margin-bottom: 28px;
+}
+
+.vip-stat-item {
+    flex: 1;
+    text-align: center;
+}
+
+.vip-stat-value {
+    font-size: 28px;
+    color: white;
+    font-weight: 700;
+    margin-bottom: 6px;
+    display: block;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.vip-stat-label {
+    font-size: 11px;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 500;
+}
+
+.vip-stat-divider {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.2), transparent);
+}
+
+.vip-countdown {
+    text-align: center;
+    color: white;
+    z-index: 2;
+    position: relative;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 12px;
+    border-radius: 12px;
+    backdrop-filter: blur(5px);
+}
+
+.countdown-timer {
+    font-family: 'Monaco', 'Consolas', monospace;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    color: #10b981;
+    letter-spacing: 2px;
+}
+
+.countdown-label {
+    font-size: 11px;
+    color: #64748b;
+    font-weight: 600;
+}
+
+/* Special Package Header */
+.vip-section-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 24px;
+    position: relative;
+}
+
+.special-package-badge {
+    background: linear-gradient(90deg, #6366f1 0%, #a855f7 100%);
+    padding: 10px 32px;
+    border-radius: 25px;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 5px 20px rgba(139, 92, 246, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    animation: pulse 2s infinite;
+}
+
+/* VIP Level Cards */
+.vip-level-card {
+    background: rgba(26, 26, 36, 0.8);
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.vip-level-card:hover {
+    transform: translateY(-5px);
+    background: rgba(30, 30, 45, 0.9);
+    border-color: rgba(99, 102, 241, 0.3);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+}
+
+.vip-level-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to right,
+            transparent,
+            rgba(255, 255, 255, 0.05),
+            transparent);
+    transform: skewX(-25deg);
+    transition: 0.75s;
+}
+
+.vip-level-card:hover::after {
+    left: 150%;
+}
+
+.vip-card-header {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.vip-level-title {
+    font-size: 18px;
+    color: white;
+    font-weight: 700;
+    background: linear-gradient(to right, #fff, #94a3b8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.vip-card-stats {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.vip-card-stat-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.vip-card-stat-value {
+    color: white;
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.vip-card-stat-value.highlight {
+    color: #10b981;
+}
+
+.vip-card-stat-label {
+    font-size: 11px;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.vip-action-btn {
+    width: 100%;
+    padding: 16px;
+    border-radius: 30px;
+    font-size: 15px;
+    font-weight: 600;
+    text-align: center;
+    background: linear-gradient(90deg, #3b82f6 0%, #8b5cf6 100%);
+    color: white;
+    box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.vip-action-btn:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 25px rgba(59, 130, 246, 0.5);
+}
+
+.vip-action-btn:active {
+    transform: scale(0.98);
+}
+
+.vip-action-btn.disabled {
+    background: #334155;
+    color: #94a3b8;
+    box-shadow: none;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.vip-action-btn.active-status {
+    background: linear-gradient(90deg, #059669 0%, #10b981 100%);
+    color: white;
+    cursor: default;
+    box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    animation: activePulse 2s infinite;
+}
+
+@keyframes activePulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.01);
+        box-shadow: 0 5px 20px rgba(16, 185, 129, 0.5);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.vip-action-btn.pending-status {
+    background: linear-gradient(90deg, #f59e0b 0%, #fbbf24 100%);
+    color: white;
+    cursor: default;
+    box-shadow: 0 5px 15px rgba(245, 158, 11, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    animation: pendingPulse 2s infinite;
+}
+
+@keyframes pendingPulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.01);
+        box-shadow: 0 5px 20px rgba(245, 158, 11, 0.5);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 5px 20px rgba(139, 92, 246, 0.4);
+    }
+
+    50% {
+        box-shadow: 0 5px 30px rgba(139, 92, 246, 0.7);
+    }
+
+    100% {
+        box-shadow: 0 5px 20px rgba(139, 92, 246, 0.4);
+    }
+}
+
+/* List staggered animation */
+.vip-levels-list>div {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.5s ease forwards;
+}
+
+.vip-levels-list>div:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.vip-levels-list>div:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.vip-levels-list>div:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.vip-levels-list>div:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+.vip-levels-list>div:nth-child(5) {
+    animation-delay: 0.5s;
+}
+
+.vip-levels-list>div:nth-child(n+6) {
+    animation-delay: 0.6s;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

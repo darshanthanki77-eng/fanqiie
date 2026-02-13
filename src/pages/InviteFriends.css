@@ -1,0 +1,431 @@
+/* Invite Page Premium Styling */
+.invite-page-wrapper {
+    background-color: #0f172a;
+    min-height: 100vh;
+    padding-bottom: 90px;
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+}
+
+.invite-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 16px;
+}
+
+/* Header Adjustments */
+.invite-header-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: white;
+}
+
+.header-icon-btn {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.header-icon-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+/* Hero Section */
+.invite-hero-card {
+    background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+    border-radius: 24px;
+    padding: 32px 24px;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.hero-decor-circles .circle-1 {
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.3) 0%, transparent 70%);
+    border-radius: 50%;
+}
+
+.hero-decor-circles .circle-2 {
+    position: absolute;
+    bottom: -60px;
+    left: -20px;
+    width: 120px;
+    height: 120px;
+    background: radial-gradient(circle, rgba(168, 85, 247, 0.2) 0%, transparent 70%);
+    border-radius: 50%;
+}
+
+.hero-content-box {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+
+.trophy-badge {
+    width: 56px;
+    height: 56px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    animation: float-hero 4s ease-in-out infinite;
+}
+
+@keyframes float-hero {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+.hero-content-box h2 {
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+}
+
+.hero-content-box p {
+    font-size: 14px;
+    color: #cbd5e1;
+    max-width: 250px;
+    margin: 0 auto;
+    line-height: 1.5;
+}
+
+/* Premium Component Cards */
+.invite-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+.premium-glass-card {
+    background: rgba(30, 41, 59, 0.5);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 28px;
+    padding: 24px;
+    height: 100%;
+    transition: transform 0.3s;
+}
+
+.premium-glass-card:hover {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* QR Area */
+.qr-box-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.qr-outer-glow {
+    position: relative;
+    padding: 10px;
+}
+
+.qr-outer-glow::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.4) 0%, transparent 70%);
+    z-index: -1;
+}
+
+.qr-wrapper {
+    background: white;
+    padding: 16px;
+    border-radius: 24px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.qr-label {
+    margin-top: 16px;
+    font-size: 13px;
+    color: #64748b;
+    font-weight: 600;
+}
+
+/* Input Styles */
+.invite-details {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.invite-input-row label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #475569;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.premium-input-box {
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 16px;
+    border-radius: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.code-display {
+    font-size: 20px;
+    font-weight: 800;
+    color: white;
+    letter-spacing: 1px;
+}
+
+.link-display {
+    font-size: 13px;
+    color: #94a3b8;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.copy-action-btn {
+    background: rgba(99, 102, 241, 0.1);
+    border: none;
+    color: #818cf8;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+/* Social Pills */
+.social-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.social-pill {
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.02);
+    color: #e2e8f0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.social-pill:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.social-pill.tw:hover {
+    color: #1da1f2;
+    border-color: rgba(29, 161, 242, 0.3);
+}
+
+.social-pill.tg:hover {
+    color: #0088cc;
+    border-color: rgba(0, 136, 204, 0.3);
+}
+
+.social-pill.wa:hover {
+    color: #25d366;
+    border-color: rgba(37, 211, 102, 0.3);
+}
+
+.social-pill.fb:hover {
+    color: #1877f2;
+    border-color: rgba(24, 119, 242, 0.3);
+}
+
+/* Benefits Card */
+.title-with-icon {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.title-with-icon h3 {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.advantages-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.advantages-desc {
+    font-size: 14px;
+    color: #94a3b8;
+    line-height: 1.6;
+    margin-bottom: 24px;
+}
+
+.reward-summary-card {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%);
+    border-radius: 20px;
+    padding: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    margin-bottom: 24px;
+}
+
+.reward-title {
+    font-size: 15px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.highlight-gradient {
+    font-size: 24px;
+    background: linear-gradient(90deg, #fbbf24, #f59e0b);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.level-nodes-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.level-node {
+    background: rgba(15, 23, 42, 0.4);
+    padding: 12px 16px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.node-icon-bg {
+    width: 36px;
+    height: 36px;
+    background: rgba(99, 102, 241, 0.15);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #818cf8;
+}
+
+.node-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.node-info .lvl {
+    font-size: 11px;
+    color: #64748b;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.node-info .pct {
+    font-size: 16px;
+    font-weight: 700;
+    color: white;
+}
+
+/* Calculation Guide */
+.calculation-guide {
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 16px;
+    padding: 16px;
+}
+
+.guide-title {
+    font-size: 13px;
+    color: #818cf8;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.guide-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.guide-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+}
+
+.item-label {
+    color: #94a3b8;
+}
+
+.item-value {
+    font-weight: 700;
+    color: #10b981;
+}
+
+@media (min-width: 1024px) {
+    .invite-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* Animations Utility */
+.animate-fade-up {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.6s ease forwards;
+}
+
+@keyframes fadeUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
