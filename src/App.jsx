@@ -4,13 +4,14 @@ import Header from './components/Header';
 import HeroBanner from './components/HeroBanner';
 import { Ticker, QuickActions, TaskCenter } from './components/MiddleSections';
 import { VideoClassification, VideoSection } from './components/VideoComponents';
-import { BottomNav, NotificationFooter, TelegramFab } from './components/Navigation';
+import { BottomNav, NotificationFooter, TelegramFab, WhatsAppFab } from './components/Navigation';
 import Promotion from './pages/Promotion';
 import VIP from './pages/VIP';
 import InviteFriends from './pages/InviteFriends';
 import Login from './pages/Login';
 import Me from './pages/Me';
 import MemberList from './pages/MemberList';
+import DownlineDetails from './pages/DownlineDetails';
 import Register from './pages/Register';
 import SwitchLanguage from './pages/SwitchLanguage';
 import VideoDetail from './pages/VideoDetail';
@@ -22,6 +23,7 @@ import Recharge from './pages/Recharge';
 import RechargeDetail from './pages/RechargeDetail';
 import Withdraw from './pages/Withdraw';
 import AnnouncementModal from './components/AnnouncementModal';
+import { AnnouncementPopup, AnnouncementTicker } from './components/AnnouncementDisplay';
 import AdminDashboard from './admin/pages/AdminDashboard';
 import AdminUsers from './admin/pages/AdminUsers';
 import AdminRecharges from './admin/pages/AdminRecharges';
@@ -31,6 +33,10 @@ import AdminTrailers from './admin/pages/AdminTrailers';
 import AdminLevels from './admin/pages/AdminLevels';
 import AdminRatings from './admin/pages/AdminRatings';
 import AdminSettings from './admin/pages/AdminSettings';
+import AdminBanners from './admin/pages/AdminBanners';
+import AdminAnnouncements from './admin/pages/AdminAnnouncements';
+import AdminFinance from './admin/pages/AdminFinance';
+import AdminUserDetails from './admin/pages/AdminUserDetails';
 import AdminRoute from './components/AdminRoute';
 import ProtectedRoute from './components/ProtectedRoute';
 import { VIDEOS } from './mockData';
@@ -118,6 +124,7 @@ function App() {
           <ProtectedRoute>
             <Header onLangClick={() => navigate('/switch-lang')} />
             <HeroBanner />
+            <AnnouncementTicker />
             <Ticker />
             <QuickActions />
             <TaskCenter />
@@ -127,6 +134,7 @@ function App() {
             <NotificationFooter user={user} />
             <TelegramFab />
             {showAnnouncement && <AnnouncementModal onClose={() => setShowAnnouncement(false)} lang={currentLang} />}
+            <AnnouncementPopup />
           </ProtectedRoute>
         } />
         <Route path="/promotion" element={<ProtectedRoute><Promotion /></ProtectedRoute>} />
@@ -134,6 +142,7 @@ function App() {
         <Route path="/invite" element={<ProtectedRoute><InviteFriends /></ProtectedRoute>} />
         <Route path="/me" element={<ProtectedRoute><Me /></ProtectedRoute>} />
         <Route path="/member-list" element={<ProtectedRoute><MemberList onBack={() => navigate('/promotion')} /></ProtectedRoute>} />
+        <Route path="/downline-details" element={<ProtectedRoute><DownlineDetails /></ProtectedRoute>} />
         <Route path="/video-detail" element={<ProtectedRoute><VideoDetail video={selectedVideo} onBack={() => navigate('/home')} onVideoClick={handleVideoClick} /></ProtectedRoute>} />
         <Route path="/switch-lang" element={<ProtectedRoute><SwitchLanguage currentLang={currentLang} onSelectLang={setCurrentLang} onBack={() => navigate(-1)} /></ProtectedRoute>} />
         <Route path="/login-password" element={<ProtectedRoute><LoginPassword onBack={() => navigate('/me')} /></ProtectedRoute>} />
@@ -145,6 +154,7 @@ function App() {
         <Route path="/withdraw" element={<ProtectedRoute><Withdraw /></ProtectedRoute>} />
 
         {/* Admin Routes */}
+        <Route path="/admin" element={<Navigate to="/admin/dashboard" />} />
         <Route path="/admin/dashboard" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
         <Route path="/admin/users" element={<AdminRoute><AdminUsers /></AdminRoute>} />
         <Route path="/admin/recharges" element={<AdminRoute><AdminRecharges /></AdminRoute>} />
@@ -154,6 +164,10 @@ function App() {
         <Route path="/admin/levels" element={<AdminRoute><AdminLevels /></AdminRoute>} />
         <Route path="/admin/ratings" element={<AdminRoute><AdminRatings /></AdminRoute>} />
         <Route path="/admin/settings" element={<AdminRoute><AdminSettings /></AdminRoute>} />
+        <Route path="/admin/banners" element={<AdminRoute><AdminBanners /></AdminRoute>} />
+        <Route path="/admin/announcements" element={<AdminRoute><AdminAnnouncements /></AdminRoute>} />
+        <Route path="/admin/finance" element={<AdminRoute><AdminFinance /></AdminRoute>} />
+        <Route path="/admin/users/:id/details" element={<AdminRoute><AdminUserDetails /></AdminRoute>} />
       </Routes>
 
       {showBottomNav && (
@@ -168,6 +182,14 @@ function App() {
             me: t('me')
           }}
         />
+      )}
+
+      {/* Floating Action Buttons - Hidden on Admin routes */}
+      {!location.pathname.startsWith('/admin') && (
+        <>
+          <WhatsAppFab />
+          <TelegramFab />
+        </>
       )}
     </div>
   );
