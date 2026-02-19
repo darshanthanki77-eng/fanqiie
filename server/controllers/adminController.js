@@ -7,6 +7,8 @@ const LevelRate = require('../models/LevelRate');
 const Rating = require('../models/Rating');
 const Config = require('../models/Config');
 const WithdrawFee = require('../models/WithdrawFee');
+const BlockedIP = require('../models/BlockedIP');
+const Contact = require('../models/Contact');
 
 // @desc    Get admin dashboard stats
 // @route   GET /api/admin/dashboard
@@ -571,13 +573,25 @@ const getSystemSettings = async (req, res) => {
             withdrawConfig = await WithdrawFee.create({ feePercentage: 5, minWithdrawal: 2 });
         }
 
+        let contactConfig = await Contact.findOne();
+        if (!contactConfig) {
+            contactConfig = await Contact.create({
+                whatsappNumber: '',
+                telegramLink: '',
+                whatsappEnabled: true,
+                telegramEnabled: true
+            });
+        }
+
         res.status(200).json({
             success: true,
             data: {
                 recharge: { L1: rechargeRates.L1, L2: rechargeRates.L2, L3: rechargeRates.L3 },
                 task: { L1: taskRates.L1, L2: taskRates.L2, L3: taskRates.L3 },
                 withdrawalFee: withdrawConfig.feePercentage,
-                minWithdrawal: withdrawConfig.minWithdrawal
+                minWithdrawal: withdrawConfig.minWithdrawal,
+                noSubordinateWithdrawPercent: withdrawConfig.noSubordinateWithdrawPercent || 100,
+                contact: contactConfig
             }
         });
     } catch (error) {
@@ -623,8 +637,17 @@ const updateSystemSettings = async (req, res) => {
                 {},
                 {
                     feePercentage: Number(req.body.withdrawalFee),
-                    minWithdrawal: req.body.minWithdrawal !== undefined ? Number(req.body.minWithdrawal) : 2
+                    minWithdrawal: req.body.minWithdrawal !== undefined ? Number(req.body.minWithdrawal) : 2,
+                    noSubordinateWithdrawPercent: req.body.noSubordinateWithdrawPercent !== undefined ? Number(req.body.noSubordinateWithdrawPercent) : 100
                 },
+                { upsert: true, new: true }
+            );
+        }
+
+        if (req.body.contact) {
+            await Contact.findOneAndUpdate(
+                {},
+                req.body.contact,
                 { upsert: true, new: true }
             );
         }
@@ -662,6 +685,81 @@ const getRatings = async (req, res) => {
     }
 };
 
+// @desc    Block an IP address
+// @route   POST /api/admin/ips/block
+// @access  Private/Admin
+const blockIP = async (req, res) => {
+    try {
+        const { ipAddress, reason } = req.body;
+
+        if (!ipAddress) {
+            return res.status(400).json({ success: false, message: 'IP address is required' });
+        }
+
+        const existing = await BlockedIP.findOne({ ipAddress });
+        if (existing) {
+            return res.status(400).json({ success: false, message: 'IP is already blocked' });
+        }
+
+        await BlockedIP.create({ ipAddress, reason });
+
+        res.status(201).json({
+            success: true,
+            message: 'IP address blocked successfully'
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+};
+
+// @desc    Unblock an IP address
+// @route   DELETE /api/admin/ips/:ip/unblock
+// @access  Private/Admin
+const unblockIP = async (req, res) => {
+    try {
+        const ipAddress = req.params.ip;
+
+        const result = await BlockedIP.findOneAndDelete({ ipAddress });
+
+        if (!result) {
+            return res.status(404).json({ success: false, message: 'IP address not found in blocked list' });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: 'IP address unblocked successfully'
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+};
+
+// @desc    Get all blocked IPs
+// @route   GET /api/admin/ips/blocked
+// @access  Private/Admin
+const getBlockedIPs = async (req, res) => {
+    try {
+        const ips = await BlockedIP.find().sort({ blockedAt: -1 });
+
+        res.status(200).json({
+            success: true,
+            count: ips.length,
+            data: ips
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+};
+
 module.exports = {
     getDashboardStats,
     getAllUsers,
@@ -680,5 +778,8 @@ module.exports = {
     getRatings,
     getAllPurchases,
     getAllRecharges,
-    getAllWithdrawals
+    getAllWithdrawals,
+    blockIP,
+    unblockIP,
+    getBlockedIPs
 };

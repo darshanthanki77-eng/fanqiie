@@ -156,7 +156,7 @@ const Me = () => {
                         <span className="stat-val-main">{(user.totalIncome || 0).toFixed(2)}</span>
                     </div>
                     <div className="stat-divider-v"></div>
-                    <div className="stat-main-box">
+                    <div className="stat-main-box" onClick={() => navigate('/downline-details')} style={{ cursor: 'pointer' }}>
                         <span className="stat-label-sub">TEAM SIZE</span>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                             <Users size={16} color="#3b82f6" />

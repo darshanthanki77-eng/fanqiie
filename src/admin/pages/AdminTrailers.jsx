@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Plus, Trash2, Play, Video, Edit2 } from 'lucide-react';
+import { ArrowLeft, Plus, Trash2, Play, Video, Edit2, Zap } from 'lucide-react';
 import API_BASE_URL from '../../apiConfig';
 import './AdminTrailers.css';
 
@@ -16,7 +16,29 @@ const AdminTrailers = () => {
         thumbnail: '',
         videoUrl: '',
         duration: '0:00',
-        category: 'Trailer'
+        category: 'Trailer',
+        points: 0,
+        autoViewsEnabled: false,
+        baseViews: 23000,
+        dailyIncrement: 500,
+        autoLikesEnabled: false,
+        likeRatio: 0.8,
+        autoRatingEnabled: false,
+        ratingValue: 4.5,
+        isRatingDynamic: false
+    });
+    const [showBulkModal, setShowBulkModal] = useState(false);
+    const [bulkSettings, setBulkSettings] = useState({
+        target: 'all', // all, category
+        category: 'Trailer',
+        autoViewsEnabled: true,
+        baseViews: 23000,
+        dailyIncrement: 500,
+        autoLikesEnabled: true,
+        likeRatio: 0.8,
+        autoRatingEnabled: true,
+        ratingValue: 4.5,
+        isRatingDynamic: true
     });
 
     useEffect(() => {
@@ -52,7 +74,13 @@ const AdminTrailers = () => {
 
     const handleAddClick = () => {
         setIsEditing(false);
-        setNewTrailer({ title: '', thumbnail: '', videoUrl: '', duration: '0:00', category: 'Trailer' });
+        setNewTrailer({
+            title: '', thumbnail: '', videoUrl: '', duration: '0:00', category: 'Trailer',
+            points: 0,
+            autoViewsEnabled: false, baseViews: 23000, dailyIncrement: 500,
+            autoLikesEnabled: false, likeRatio: 0.8,
+            autoRatingEnabled: false, ratingValue: 4.5, isRatingDynamic: false
+        });
         setShowAddModal(true);
     };
 
@@ -64,7 +92,16 @@ const AdminTrailers = () => {
             thumbnail: trailer.thumbnail,
             videoUrl: trailer.videoUrl,
             duration: trailer.duration,
-            category: trailer.category
+            category: trailer.category,
+            points: trailer.points || 0,
+            autoViewsEnabled: trailer.autoViewsEnabled || false,
+            baseViews: trailer.baseViews || 0,
+            dailyIncrement: trailer.dailyIncrement || 0,
+            autoLikesEnabled: trailer.autoLikesEnabled || false,
+            likeRatio: trailer.likeRatio || 0.8,
+            autoRatingEnabled: trailer.autoRatingEnabled || false,
+            ratingValue: trailer.ratingValue || 4.5,
+            isRatingDynamic: trailer.isRatingDynamic || false
         });
         setShowAddModal(true);
     };
@@ -117,6 +154,44 @@ const AdminTrailers = () => {
         }
     };
 
+    const handleBulkSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const token = localStorage.getItem('token');
+            const response = await fetch(`${API_BASE_URL}/admin/trailers/bulk-update`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    target: bulkSettings.target,
+                    category: bulkSettings.category,
+                    settings: {
+                        autoViewsEnabled: bulkSettings.autoViewsEnabled,
+                        baseViews: bulkSettings.baseViews,
+                        dailyIncrement: bulkSettings.dailyIncrement,
+                        autoLikesEnabled: bulkSettings.autoLikesEnabled,
+                        likeRatio: bulkSettings.likeRatio,
+                        autoRatingEnabled: bulkSettings.autoRatingEnabled,
+                        ratingValue: bulkSettings.ratingValue,
+                        isRatingDynamic: bulkSettings.isRatingDynamic
+                    }
+                })
+            });
+            const data = await response.json();
+            if (data.success) {
+                alert(data.message);
+                setShowBulkModal(false);
+                fetchTrailers();
+            } else {
+                alert(data.message || 'Bulk update failed');
+            }
+        } catch (error) {
+            console.error('Error in bulk update:', error);
+        }
+    };
+
     return (
         <div className="admin-container">
             {/* Header */}
@@ -125,9 +200,14 @@ const AdminTrailers = () => {
                     <ArrowLeft size={20} />
                 </button>
                 <h2 className="page-title">Manage Trailers</h2>
-                <button className="add-btn-admin" onClick={handleAddClick}>
-                    <Plus size={20} />
-                </button>
+                <div style={{ display: 'flex', gap: '10px' }}>
+                    <button className="add-btn-admin" style={{ background: '#f59e0b' }} onClick={() => setShowBulkModal(true)} title="Bulk Engagement Update">
+                        <Zap size={20} />
+                    </button>
+                    <button className="add-btn-admin" onClick={handleAddClick} title="Add Trailer">
+                        <Plus size={20} />
+                    </button>
+                </div>
             </div>
 
             {/* Content */}
@@ -222,6 +302,16 @@ const AdminTrailers = () => {
                                     />
                                 </div>
                                 <div className="form-group">
+                                    <label>Points / Reward</label>
+                                    <input
+                                        type="number"
+                                        required
+                                        value={newTrailer.points}
+                                        onChange={(e) => setNewTrailer({ ...newTrailer, points: e.target.value })}
+                                        placeholder="e.g. 100"
+                                    />
+                                </div>
+                                <div className="form-group">
                                     <label>Duration</label>
                                     <input
                                         type="text"
@@ -231,10 +321,253 @@ const AdminTrailers = () => {
                                         placeholder="e.g. 2:30"
                                     />
                                 </div>
+
+                                <hr style={{ border: 'none', borderTop: '1px solid rgba(255,255,255,0.05)', margin: '20px 0' }} />
+
+                                <div className="engagement-admin-section">
+                                    <h4 className="section-subtitle">Automatic Engagement Settings</h4>
+
+                                    {/* Views System */}
+                                    <div className="engagement-row">
+                                        <div className="engagement-col">
+                                            <label className="toggle-label">
+                                                <input
+                                                    type="checkbox"
+                                                    checked={newTrailer.autoViewsEnabled}
+                                                    onChange={(e) => setNewTrailer({ ...newTrailer, autoViewsEnabled: e.target.checked })}
+                                                />
+                                                Auto Views System
+                                            </label>
+                                        </div>
+                                        {newTrailer.autoViewsEnabled && (
+                                            <>
+                                                <div className="engagement-col">
+                                                    <label>Base Views</label>
+                                                    <input
+                                                        type="number"
+                                                        value={newTrailer.baseViews}
+                                                        onChange={(e) => setNewTrailer({ ...newTrailer, baseViews: e.target.value })}
+                                                    />
+                                                </div>
+                                                <div className="engagement-col">
+                                                    <label>Daily Increment</label>
+                                                    <input
+                                                        type="number"
+                                                        value={newTrailer.dailyIncrement}
+                                                        onChange={(e) => setNewTrailer({ ...newTrailer, dailyIncrement: e.target.value })}
+                                                    />
+                                                </div>
+                                            </>
+                                        )}
+                                    </div>
+
+                                    {/* Likes System */}
+                                    <div className="engagement-row">
+                                        <div className="engagement-col">
+                                            <label className="toggle-label">
+                                                <input
+                                                    type="checkbox"
+                                                    checked={newTrailer.autoLikesEnabled}
+                                                    onChange={(e) => setNewTrailer({ ...newTrailer, autoLikesEnabled: e.target.checked })}
+                                                />
+                                                Auto Likes System
+                                            </label>
+                                        </div>
+                                        {newTrailer.autoLikesEnabled && (
+                                            <div className="engagement-col">
+                                                <label>Like Ratio (0.1 - 1.0)</label>
+                                                <input
+                                                    type="number"
+                                                    step="0.1"
+                                                    min="0.1"
+                                                    max="1.0"
+                                                    value={newTrailer.likeRatio}
+                                                    onChange={(e) => setNewTrailer({ ...newTrailer, likeRatio: e.target.value })}
+                                                />
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    {/* Rating System */}
+                                    <div className="engagement-row">
+                                        <div className="engagement-col">
+                                            <label className="toggle-label">
+                                                <input
+                                                    type="checkbox"
+                                                    checked={newTrailer.autoRatingEnabled}
+                                                    onChange={(e) => setNewTrailer({ ...newTrailer, autoRatingEnabled: e.target.checked })}
+                                                />
+                                                Auto Rating System
+                                            </label>
+                                        </div>
+                                        {newTrailer.autoRatingEnabled && (
+                                            <>
+                                                <div className="engagement-col">
+                                                    <label>Rating Value (Stars)</label>
+                                                    <input
+                                                        type="number"
+                                                        step="0.1"
+                                                        min="1"
+                                                        max="5"
+                                                        value={newTrailer.ratingValue}
+                                                        onChange={(e) => setNewTrailer({ ...newTrailer, ratingValue: e.target.value })}
+                                                    />
+                                                </div>
+                                                <div className="engagement-col">
+                                                    <label className="toggle-label" style={{ fontSize: '11px', marginTop: '10px' }}>
+                                                        <input
+                                                            type="checkbox"
+                                                            checked={newTrailer.isRatingDynamic}
+                                                            onChange={(e) => setNewTrailer({ ...newTrailer, isRatingDynamic: e.target.checked })}
+                                                        />
+                                                        Randomize (4.2-4.9)
+                                                    </label>
+                                                </div>
+                                            </>
+                                        )}
+                                    </div>
+
+                                    <div style={{ marginTop: '15px', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '15px' }}>
+                                        <button
+                                            type="button"
+                                            className="aud-btn aud-btn-danger"
+                                            style={{ width: '100%', fontSize: '11px', padding: '8px' }}
+                                            onClick={async () => {
+                                                if (confirm('Reset growth timer to start from today? This will reset auto views to Base value.')) {
+                                                    const token = localStorage.getItem('token');
+                                                    const resp = await fetch(`${API_BASE_URL}/admin/trailers/${currentTrailerId}`, {
+                                                        method: 'PUT',
+                                                        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                                                        body: JSON.stringify({ resetGrowth: true })
+                                                    });
+                                                    const res = await resp.json();
+                                                    if (res.success) {
+                                                        alert('Growth counter reset successfully');
+                                                        fetchTrailers();
+                                                        setShowAddModal(false);
+                                                    }
+                                                }
+                                            }}
+                                        >
+                                            <Zap size={14} /> Reset Growth / Restart Counter
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                             <div className="modal-footer">
                                 <button type="submit" className="save-btn">
                                     <Video size={16} /> {isEditing ? 'Update Trailer' : 'Add Trailer'}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
+
+            {/* Bulk Update Modal */}
+            {showBulkModal && (
+                <div className="modal-overlay">
+                    <div className="edit-modal">
+                        <div className="modal-header">
+                            <h3>Bulk Engagement Control</h3>
+                            <button className="close-btn" onClick={() => setShowBulkModal(false)}>
+                                <Plus size={24} style={{ transform: 'rotate(45deg)' }} />
+                            </button>
+                        </div>
+                        <form onSubmit={handleBulkSubmit}>
+                            <div className="modal-body">
+                                <p style={{ fontSize: '12px', color: '#94a3b8', marginBottom: '15px' }}>
+                                    Apply these engagement settings to multiple videos at once.
+                                </p>
+
+                                <div className="form-group">
+                                    <label>Apply To</label>
+                                    <select
+                                        className="modal-input"
+                                        style={{ width: '100%', padding: '10px', background: 'rgba(15, 23, 42, 0.6)', border: '1px solid rgba(255, 255, 255, 0.1)', color: 'white', borderRadius: '8px' }}
+                                        value={bulkSettings.target}
+                                        onChange={(e) => setBulkSettings({ ...bulkSettings, target: e.target.value })}
+                                    >
+                                        <option value="all">All Videos</option>
+                                        <option value="category">Selected Category</option>
+                                    </select>
+                                </div>
+
+                                {bulkSettings.target === 'category' && (
+                                    <div className="form-group">
+                                        <label>Target Category</label>
+                                        <select
+                                            className="modal-input"
+                                            style={{ width: '100%', padding: '10px', background: 'rgba(15, 23, 42, 0.6)', border: '1px solid rgba(255, 255, 255, 0.1)', color: 'white', borderRadius: '8px' }}
+                                            value={bulkSettings.category}
+                                            onChange={(e) => setBulkSettings({ ...bulkSettings, category: e.target.value })}
+                                        >
+                                            <option value="Trailer">Trailer</option>
+                                            <option value="Commercial advertising">Commercial advertising</option>
+                                            <option value="Music">Music</option>
+                                        </select>
+                                    </div>
+                                )}
+
+                                <div className="engagement-admin-section">
+                                    <h4 className="section-subtitle">Auto Metrics Configuration</h4>
+
+                                    <label className="toggle-label" style={{ marginBottom: '15px' }}>
+                                        <input type="checkbox" checked={bulkSettings.autoViewsEnabled} onChange={(e) => setBulkSettings({ ...bulkSettings, autoViewsEnabled: e.target.checked })} />
+                                        Enable Auto Views
+                                    </label>
+
+                                    {bulkSettings.autoViewsEnabled && (
+                                        <div className="engagement-row">
+                                            <div className="engagement-col">
+                                                <label>Base Views</label>
+                                                <input type="number" value={bulkSettings.baseViews} onChange={(e) => setBulkSettings({ ...bulkSettings, baseViews: e.target.value })} />
+                                            </div>
+                                            <div className="engagement-col">
+                                                <label>Daily Increment</label>
+                                                <input type="number" value={bulkSettings.dailyIncrement} onChange={(e) => setBulkSettings({ ...bulkSettings, dailyIncrement: e.target.value })} />
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    <label className="toggle-label" style={{ marginBottom: '15px' }}>
+                                        <input type="checkbox" checked={bulkSettings.autoLikesEnabled} onChange={(e) => setBulkSettings({ ...bulkSettings, autoLikesEnabled: e.target.checked })} />
+                                        Enable Auto Likes
+                                    </label>
+
+                                    {bulkSettings.autoLikesEnabled && (
+                                        <div className="engagement-row">
+                                            <div className="engagement-col">
+                                                <label>Like/View Ratio (0.1 - 1.0)</label>
+                                                <input type="number" step="0.1" value={bulkSettings.likeRatio} onChange={(e) => setBulkSettings({ ...bulkSettings, likeRatio: e.target.value })} />
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    <label className="toggle-label" style={{ marginBottom: '15px' }}>
+                                        <input type="checkbox" checked={bulkSettings.autoRatingEnabled} onChange={(e) => setBulkSettings({ ...bulkSettings, autoRatingEnabled: e.target.checked })} />
+                                        Enable Auto Rating
+                                    </label>
+
+                                    {bulkSettings.autoRatingEnabled && (
+                                        <div className="engagement-row">
+                                            <div className="engagement-col">
+                                                <label>Star Value</label>
+                                                <input type="number" step="0.1" value={bulkSettings.ratingValue} onChange={(e) => setBulkSettings({ ...bulkSettings, ratingValue: e.target.value })} />
+                                            </div>
+                                            <div className="engagement-col">
+                                                <label className="toggle-label" style={{ fontSize: '11px', marginTop: '10px' }}>
+                                                    <input type="checkbox" checked={bulkSettings.isRatingDynamic} onChange={(e) => setBulkSettings({ ...bulkSettings, isRatingDynamic: e.target.checked })} />
+                                                    Dynamic Range
+                                                </label>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                            <div className="modal-footer">
+                                <button type="submit" className="save-btn" style={{ background: '#f59e0b', color: 'black' }}>
+                                    <Zap size={16} /> Apply Bulk Update
                                 </button>
                             </div>
                         </form>

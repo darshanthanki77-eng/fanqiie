@@ -18,10 +18,16 @@ const {
     getRatings,
     getAllPurchases,
     getAllRecharges,
-    getAllWithdrawals
+    getAllWithdrawals,
+    blockIP,
+    unblockIP,
+    getBlockedIPs
 } = require('../controllers/adminController');
-const { getTrailers, createTrailer: addTrailer, deleteTrailer: removeTrailer, updateTrailer } = require('../controllers/trailerController');
+const { getAdminUserDetails, adjustBalance, changeParent, adminResetPassword } = require('../controllers/userDetailController');
+const { getTrailers, createTrailer: addTrailer, deleteTrailer: removeTrailer, updateTrailer, bulkUpdateTrailers } = require('../controllers/trailerController');
 const { confirmRecharge, rejectRecharge } = require('../controllers/rechargeController');
+const { getAllBannersAdmin, createBanner, updateBanner, deleteBanner } = require('../controllers/bannerController');
+const { getAllAnnouncements, createAnnouncement, updateAnnouncement, deleteAnnouncement } = require('../controllers/announcementController');
 const { adminAuth } = require('../middleware/adminAuth');
 
 // Dashboard
@@ -32,6 +38,10 @@ router.get('/users', adminAuth, getAllUsers);
 router.get('/user-levels', adminAuth, getUserLevels);
 router.put('/users/:id/block', adminAuth, toggleBlockUser);
 router.put('/users/:id', adminAuth, updateUser);
+router.get('/users/:id/details', adminAuth, getAdminUserDetails);
+router.post('/users/:id/adjust-balance', adminAuth, adjustBalance);
+router.put('/users/:id/change-parent', adminAuth, changeParent);
+router.put('/users/:id/reset-password', adminAuth, adminResetPassword);
 
 // Recharges
 router.get('/recharges/pending', adminAuth, getPendingRecharges);
@@ -60,6 +70,7 @@ router.delete('/packages/:id', adminAuth, deletePackage);
 // Trailers
 router.get('/trailers', adminAuth, getTrailers);
 router.post('/trailers', adminAuth, addTrailer);
+router.post('/trailers/bulk-update', adminAuth, bulkUpdateTrailers);
 router.put('/trailers/:id', adminAuth, updateTrailer);
 router.delete('/trailers/:id', adminAuth, removeTrailer);
 
@@ -69,5 +80,22 @@ router.put('/settings', adminAuth, updateSystemSettings);
 
 // Ratings
 router.get('/ratings', adminAuth, getRatings);
+
+// IP Blocking
+router.get('/ips/blocked', adminAuth, getBlockedIPs);
+router.post('/ips/block', adminAuth, blockIP);
+router.delete('/ips/:ip/unblock', adminAuth, unblockIP);
+
+// Banners
+router.get('/banners', adminAuth, getAllBannersAdmin);
+router.post('/banners', adminAuth, createBanner);
+router.put('/banners/:id', adminAuth, updateBanner);
+router.delete('/banners/:id', adminAuth, deleteBanner);
+
+// Announcements
+router.get('/announcements', adminAuth, getAllAnnouncements);
+router.post('/announcements', adminAuth, createAnnouncement);
+router.put('/announcements/:id', adminAuth, updateAnnouncement);
+router.delete('/announcements/:id', adminAuth, deleteAnnouncement);
 
 module.exports = router;

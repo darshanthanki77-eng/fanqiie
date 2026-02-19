@@ -55,10 +55,11 @@ export const VideoCard = ({ video, onClick }) => {
             <div style={{ padding: '12px' }}>
                 <h4 style={{ fontSize: '15px', marginBottom: '8px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', color: '#fff' }}>{video.title}</h4>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-                    <div style={{ display: 'flex', gap: '2px' }}>
+                    <div style={{ display: 'flex', gap: '2px', alignItems: 'center' }}>
                         {Array(5).fill(0).map((_, i) => (
-                            <Star key={i} size={12} fill={i < video.stars ? '#fbbf24' : '#444'} color={i < video.stars ? '#fbbf24' : '#444'} />
+                            <Star key={i} size={12} fill={i < Math.floor(video.stars) ? '#fbbf24' : '#444'} color={i < Math.floor(video.stars) ? '#fbbf24' : '#444'} />
                         ))}
+                        <span style={{ fontSize: '12px', color: '#fbbf24', marginLeft: '4px', fontWeight: 'bold' }}>{video.stars}</span>
                     </div>
                     <span style={{ fontSize: '12px', color: '#94a3b8' }}>{video.points} points</span>
                 </div>

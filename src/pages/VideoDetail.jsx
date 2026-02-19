@@ -6,6 +6,7 @@ import { VIDEOS } from '../mockData';
 import MessagePopup from '../components/MessagePopup';
 import TaskRequirementPopup from '../components/TaskRequirementPopup';
 import RatingPopup from '../components/RatingPopup';
+import AnimatedCounter from '../components/AnimatedCounter';
 import API_BASE_URL from '../apiConfig';
 import './VideoDetail.css';
 
@@ -187,17 +188,36 @@ const VideoDetail = ({ video, onBack, onVideoClick }) => {
                 </button>
 
                 <div className="meta-info">
+                    <div className="engagement-stats-bar">
+                        <div className="stat-item">
+                            <span className="stat-val">
+                                <AnimatedCounter end={video.rawViews} />
+                            </span>
+                            <span className="stat-label">Views</span>
+                        </div>
+                        <div className="stat-item">
+                            <span className="stat-val">
+                                <AnimatedCounter end={video.rawLikes} />
+                            </span>
+                            <span className="stat-label">Likes</span>
+                        </div>
+                        <div className="stat-item">
+                            <span className="stat-val">{video.stars}</span>
+                            <span className="stat-label">Rating</span>
+                        </div>
+                    </div>
+
                     <div className="meta-row">
                         <span className="meta-label">Type:</span>
                         <span className="meta-val">{video.category || 'Trailer'}</span>
                     </div>
                     <div className="meta-row">
-                        <span className="meta-label">Director:</span>
-                        <span className="meta-val">Matt Ruskin</span>
+                        <span className="meta-label">Total Points:</span>
+                        <span className="meta-val" style={{ color: '#fbbf24' }}>{video.points}</span>
                     </div>
                     <div className="meta-row">
                         <span className="meta-label">Description:</span>
-                        <span className="meta-val">Rate the trailer with stars to earn income based on your membership level.</span>
+                        <span className="meta-val">Rate the trailer to earn income. All metrics (views, likes) are automatically optimized for platform engagement.</span>
                     </div>
                 </div>
 

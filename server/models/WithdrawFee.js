@@ -10,6 +10,10 @@ const withdrawFeeSchema = new mongoose.Schema({
         type: Number,
         default: 2
     },
+    noSubordinateWithdrawPercent: {
+        type: Number,
+        default: 100 // Default to 100% (unrestricted)
+    },
     status: {
         type: String,
         default: 'active'

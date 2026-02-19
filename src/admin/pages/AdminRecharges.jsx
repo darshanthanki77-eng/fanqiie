@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, CheckCircle, XCircle } from 'lucide-react';
+import { ArrowLeft, CheckCircle, XCircle, ShieldOff } from 'lucide-react';
 import API_BASE_URL from '../../apiConfig';
 import './AdminRecharges.css';
 
@@ -102,6 +102,32 @@ const AdminRecharges = () => {
         }
     };
 
+    const handleBlockIP = async (ip, reason = 'Repeated fake deposit requests') => {
+        if (!ip) return;
+        if (!confirm(`Are you sure you want to block IP: ${ip}? This will prevent any further deposit requests from this IP.`)) return;
+
+        try {
+            const token = localStorage.getItem('token');
+            const response = await fetch(`${API_BASE_URL}/admin/ips/block`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ ipAddress: ip, reason })
+            });
+            const data = await response.json();
+            if (data.success) {
+                alert('IP blocked successfully!');
+            } else {
+                alert(data.message || 'Failed to block IP');
+            }
+        } catch (error) {
+            console.error('Error blocking IP:', error);
+            alert('Failed to block IP');
+        }
+    };
+
     const getStatusBadge = (status) => {
         switch (status) {
             case 'completed': return <span className="status-badge" style={{ background: 'rgba(16, 185, 129, 0.1)', color: '#10b981', padding: '4px 8px', borderRadius: '4px', fontSize: '12px' }}>Completed</span>;
@@ -170,6 +196,21 @@ const AdminRecharges = () => {
                                             <span className="detail-label">Method:</span>
                                             <span className="detail-value">{recharge.paymentMethod || 'USDT'}</span>
                                         </div>
+                                        {recharge.ipAddress && (
+                                            <div className="detail-row">
+                                                <span className="detail-label">IP Address:</span>
+                                                <span className="detail-value" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                    {recharge.ipAddress}
+                                                    <button
+                                                        onClick={() => handleBlockIP(recharge.ipAddress)}
+                                                        title="Block this IP"
+                                                        style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', padding: '0', display: 'flex' }}
+                                                    >
+                                                        <ShieldOff size={14} />
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        )}
                                         <div className="detail-row">
                                             <span className="detail-label">Date:</span>
                                             <span className="detail-value">{new Date(recharge.createdAt).toLocaleString()}</span>
@@ -235,6 +276,21 @@ const AdminRecharges = () => {
                                                 <span className="detail-label">Transaction ID:</span>
                                                 <span className="detail-value">{recharge.transactionId}</span>
                                             </div>
+                                            {recharge.ipAddress && (
+                                                <div className="detail-row">
+                                                    <span className="detail-label">IP Address:</span>
+                                                    <span className="detail-value" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                        {recharge.ipAddress}
+                                                        <button
+                                                            onClick={() => handleBlockIP(recharge.ipAddress)}
+                                                            title="Block this IP"
+                                                            style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', padding: '0', display: 'flex' }}
+                                                        >
+                                                            <ShieldOff size={14} />
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            )}
                                             <div className="detail-row">
                                                 <span className="detail-label">Date:</span>
                                                 <span className="detail-value">{new Date(recharge.createdAt).toLocaleString()}</span>

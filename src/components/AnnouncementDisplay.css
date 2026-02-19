@@ -1,0 +1,196 @@
+/* Announcement Popup */
+.announcement-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    padding: 20px;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.announcement-popup-card {
+    background: #1e293b;
+    max-width: 450px;
+    width: 100%;
+    border-radius: 20px;
+    padding: 32px 24px;
+    position: relative;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    animation: slideUp 0.4s ease-out;
+    text-align: center;
+}
+
+.announcement-close-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: inherit;
+    transition: all 0.2s;
+}
+
+.announcement-close-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+}
+
+.announcement-popup-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.announcement-popup-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 16px 0;
+    color: inherit;
+}
+
+.announcement-popup-message {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0 0 24px 0;
+    color: inherit;
+    opacity: 0.9;
+}
+
+.announcement-popup-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.announcement-priority-badge {
+    font-size: 11px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.announcement-counter {
+    font-size: 12px;
+    opacity: 0.7;
+}
+
+/* Announcement Ticker */
+.announcement-ticker-container {
+    background: linear-gradient(135deg, #1e1b4b 0%, #1a1a24 100%);
+    padding: 12px 16px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 0 16px 16px 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.announcement-ticker-icon {
+    color: #fbbf24;
+    flex-shrink: 0;
+    animation: pulse 2s infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.announcement-ticker-content {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+}
+
+.announcement-ticker-scroll {
+    display: inline-flex;
+    gap: 32px;
+    animation: scroll 25s linear infinite;
+    white-space: nowrap;
+    will-change: transform;
+}
+
+.announcement-ticker-item {
+    color: #e2e8f0;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding-right: 32px;
+}
+
+.announcement-ticker-item strong {
+    color: #fbbf24;
+    font-weight: 600;
+}
+
+.ticker-separator {
+    margin: 0 16px;
+    color: #64748b;
+    font-size: 18px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}

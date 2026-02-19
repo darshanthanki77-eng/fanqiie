@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Search, Edit2, Ban, CheckCircle, Save, X, Lock, Filter } from 'lucide-react';
+import { ArrowLeft, Search, Edit2, Ban, CheckCircle, Save, X, Lock, Filter, Shield, Users } from 'lucide-react';
 import API_BASE_URL from '../../apiConfig';
 import './AdminUsers.css';
 
@@ -216,6 +216,21 @@ const AdminUsers = () => {
                                     </td>
                                     <td>
                                         <div className="action-buttons">
+                                            <button
+                                                className="icon-action edit"
+                                                style={{ color: '#6366f1' }}
+                                                onClick={() => navigate(`/admin/users/${user._id}/details`)}
+                                                title="Comprehensive User Profile"
+                                            >
+                                                <Shield size={16} />
+                                            </button>
+                                            <button
+                                                className="icon-action view"
+                                                onClick={() => navigate(`/downline-details?userId=${user._id}`)}
+                                                title="View Downline Details"
+                                            >
+                                                <Users size={16} />
+                                            </button>
                                             <button
                                                 className="icon-action edit"
                                                 onClick={() => handleEditClick(user)}

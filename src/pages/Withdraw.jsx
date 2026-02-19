@@ -16,6 +16,11 @@ const Withdraw = () => {
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [noSubPercent, setNoSubPercent] = useState(100);
+    const [teamSize, setTeamSize] = useState(0);
+    const [totalRecharge, setTotalRecharge] = useState(0);
+    const [totalIncome, setTotalIncome] = useState(0);
+    const [isAdmin, setIsAdmin] = useState(0);
 
     // Message Popup state
     const [popup, setPopup] = useState({ isOpen: false, message: '', type: 'info' });
@@ -36,6 +41,11 @@ const Withdraw = () => {
                     setBalance(data.data.electronicWallet || 0);
                     setFeePercentage(data.data.withdrawalFee || 5);
                     setMinLimit(data.data.minWithdrawal || 2);
+                    setNoSubPercent(data.data.noSubordinateWithdrawPercent || 100);
+                    setTeamSize(data.data.teamSize || 0);
+                    setTotalRecharge(data.data.totalRecharge || 0);
+                    setTotalIncome(data.data.totalIncome || 0);
+                    setIsAdmin(data.data.isAdmin || 0);
                 }
             } catch (error) {
                 console.error('Error fetching balance:', error);
@@ -230,6 +240,53 @@ const Withdraw = () => {
                 <p>
                     The minimum withdrawal amount for BEP20 is 2USDT, and the minimum withdrawal amount for TRC20 is 2USDT. It supports 24-hour withdrawals. The withdrawal fee is {feePercentage}% (because taxes need to be paid, a withdrawal fee is required). Depending on the time and region of each country, the fastest time for withdrawal is 1 minute and the slowest time is 24 hours. Please wait patiently. If your account does not arrive within 24 hours, please contact online customer service.
                 </p>
+
+                {isAdmin !== 1 && teamSize === 0 && noSubPercent < 100 && (
+                    <div style={{
+                        marginTop: '16px',
+                        padding: '12px',
+                        border: '1px solid #f59e0b',
+                        borderRadius: '12px',
+                        background: 'rgba(245, 158, 11, 0.1)',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '6px'
+                    }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <div style={{ background: '#f59e0b', width: '4px', height: '14px', borderRadius: '10px' }}></div>
+                            <span style={{ color: '#f59e0b', fontSize: '13px', fontWeight: '700' }}>Withdrawal Limit (Promotion Rule)</span>
+                        </div>
+                        <p style={{ color: '#cbd5e1', fontSize: '12px', margin: 0, lineHeight: '1.4' }}>
+                            Since you have 0 team members, you can withdraw up to <span style={{ color: '#f59e0b', fontWeight: '600' }}>{noSubPercent}%</span> of deposits + <span style={{ color: '#10b981', fontWeight: '600' }}>100%</span> of earnings.
+                        </p>
+                        <div style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: '4px',
+                            background: 'rgba(0,0,0,0.2)',
+                            padding: '10px',
+                            borderRadius: '8px',
+                            marginTop: '4px'
+                        }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                <span style={{ color: '#94a3b8', fontSize: '11px' }}>Deposited:</span>
+                                <span style={{ color: '#fff', fontSize: '11px' }}>{totalRecharge.toFixed(2)} USDT ({noSubPercent}% allowed)</span>
+                            </div>
+                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                <span style={{ color: '#94a3b8', fontSize: '11px' }}>Total Earnings:</span>
+                                <span style={{ color: '#10b981', fontSize: '11px' }}>{totalIncome.toFixed(2)} USDT (100% allowed)</span>
+                            </div>
+                            <div style={{ height: '1px', background: 'rgba(255,255,255,0.1)', margin: '4px 0' }}></div>
+                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                <span style={{ color: '#fff', fontSize: '12px', fontWeight: '600' }}>Max Withdrawable:</span>
+                                <span style={{ color: '#10b981', fontSize: '13px', fontWeight: '800' }}>{((totalRecharge * noSubPercent / 100) + totalIncome).toFixed(2)} USDT</span>
+                            </div>
+                        </div>
+                        <p style={{ color: '#64748b', fontSize: '10px', margin: '4px 0 0 0', fontStyle: 'italic' }}>
+                            * Add team members to unlock 100% deposit withdrawal.
+                        </p>
+                    </div>
+                )}
             </div>
 
             {/* Message Popup */}

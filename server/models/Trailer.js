@@ -38,7 +38,16 @@ const trailerSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now
-    }
+    },
+    // Auto-Engagement Fields
+    autoViewsEnabled: { type: Boolean, default: false },
+    baseViews: { type: Number, default: 0 },
+    dailyIncrement: { type: Number, default: 0 },
+    autoLikesEnabled: { type: Boolean, default: false },
+    likeRatio: { type: Number, default: 0.8 }, // 80%
+    autoRatingEnabled: { type: Boolean, default: false },
+    ratingValue: { type: Number, default: 4.5 },
+    isRatingDynamic: { type: Boolean, default: false }
 }, {
     timestamps: true
 });

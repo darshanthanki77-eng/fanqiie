@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Save, Settings, Percent, Info, RefreshCw } from 'lucide-react';
+import { ArrowLeft, Save, Settings, Percent, Info, RefreshCw, MessageCircle, MessageSquare } from 'lucide-react';
 import API_BASE_URL from '../../apiConfig';
 import './AdminSettings.css';
 
@@ -13,6 +13,13 @@ const AdminSettings = () => {
     const [taskRates, setTaskRates] = useState({ L1: 1, L2: 1, L3: 1 });
     const [withdrawalFee, setWithdrawalFee] = useState(5);
     const [minWithdrawal, setMinWithdrawal] = useState(2);
+    const [noSubordinateWithdrawPercent, setNoSubordinateWithdrawPercent] = useState(100);
+    const [contact, setContact] = useState({
+        whatsappNumber: '',
+        telegramLink: '',
+        whatsappEnabled: true,
+        telegramEnabled: true
+    });
 
     useEffect(() => {
         fetchSettings();
@@ -31,6 +38,8 @@ const AdminSettings = () => {
                 setTaskRates(data.data.task);
                 setWithdrawalFee(data.data.withdrawalFee || 5);
                 setMinWithdrawal(data.data.minWithdrawal || 2);
+                setNoSubordinateWithdrawPercent(data.data.noSubordinateWithdrawPercent || 100);
+                if (data.data.contact) setContact(data.data.contact);
             }
         } catch (error) {
             console.error('Error fetching settings:', error);
@@ -55,7 +64,9 @@ const AdminSettings = () => {
                     recharge: rechargeRates,
                     task: taskRates,
                     withdrawalFee: Number(withdrawalFee),
-                    minWithdrawal: Number(minWithdrawal)
+                    minWithdrawal: Number(minWithdrawal),
+                    noSubordinateWithdrawPercent: Number(noSubordinateWithdrawPercent),
+                    contact: contact
                 })
             });
             const data = await response.json();
@@ -195,6 +206,86 @@ const AdminSettings = () => {
                                             onChange={(e) => setMinWithdrawal(parseFloat(e.target.value) || 0)}
                                         />
                                         <span className="settings-percent-unit">USDT</span>
+                                    </div>
+                                </div>
+
+                                <div className="settings-rate-field">
+                                    <div className="settings-field-label-row">
+                                        <label>Restricted Withdrawal % (No Refs)</label>
+                                        <span className="settings-current-badge" style={{ background: 'rgba(245, 158, 11, 0.1)', color: '#f59e0b' }}>{noSubordinateWithdrawPercent}%</span>
+                                    </div>
+                                    <div className="settings-input-wrapper">
+                                        <input
+                                            type="number"
+                                            step="1"
+                                            value={noSubordinateWithdrawPercent}
+                                            onChange={(e) => setNoSubordinateWithdrawPercent(parseInt(e.target.value) || 0)}
+                                        />
+                                        <span className="settings-percent-unit">%</span>
+                                    </div>
+                                    <p className="settings-field-hint" style={{ color: '#94a3b8', fontSize: '11px', marginTop: '8px' }}>
+                                        Maximum withdrawable amount as a % of total deposits for users with no subordinates.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Contact Settings Section */}
+                        <div className="settings-page-card" style={{ marginBottom: '24px' }}>
+                            <div className="settings-section-header">
+                                <div className="settings-icon-box" style={{ background: 'rgba(16, 185, 129, 0.1)' }}>
+                                    <MessageCircle size={24} color="#10b981" />
+                                </div>
+                                <div className="settings-title-box">
+                                    <h3>Support Contact Settings</h3>
+                                    <p>Configure WhatsApp and Telegram support buttons</p>
+                                </div>
+                            </div>
+
+                            <div className="settings-rate-grid">
+                                <div className="settings-rate-field">
+                                    <div className="settings-field-label-row">
+                                        <label>WhatsApp Number</label>
+                                        <label className="settings-toggle">
+                                            <input
+                                                type="checkbox"
+                                                checked={contact.whatsappEnabled}
+                                                onChange={(e) => setContact({ ...contact, whatsappEnabled: e.target.checked })}
+                                            />
+                                            <span>Enabled</span>
+                                        </label>
+                                    </div>
+                                    <div className="settings-input-wrapper">
+                                        <input
+                                            type="text"
+                                            value={contact.whatsappNumber}
+                                            onChange={(e) => setContact({ ...contact, whatsappNumber: e.target.value })}
+                                            placeholder="+1234567890"
+                                        />
+                                        <span className="settings-percent-unit">📱</span>
+                                    </div>
+                                </div>
+
+                                <div className="settings-rate-field">
+                                    <div className="settings-field-label-row">
+                                        <label>Telegram Link</label>
+                                        <label className="settings-toggle">
+                                            <input
+                                                type="checkbox"
+                                                checked={contact.telegramEnabled}
+                                                onChange={(e) => setContact({ ...contact, telegramEnabled: e.target.checked })}
+                                            />
+                                            <span>Enabled</span>
+                                        </label>
+                                    </div>
+                                    <div className="settings-input-wrapper">
+                                        <input
+                                            type="text"
+                                            value={contact.telegramLink}
+                                            onChange={(e) => setContact({ ...contact, telegramLink: e.target.value })}
+                                            placeholder="https://t.me/username"
+                                        />
+                                        <span className="settings-percent-unit">✈️</span>
                                     </div>
                                 </div>
                             </div>

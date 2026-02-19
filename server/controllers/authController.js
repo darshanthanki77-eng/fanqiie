@@ -217,6 +217,7 @@ const getMe = async (req, res) => {
         userData.directInvites = directInvites;
         userData.withdrawalFee = withdrawConfig.feePercentage;
         userData.minWithdrawal = withdrawConfig.minWithdrawal;
+        userData.noSubordinateWithdrawPercent = withdrawConfig.noSubordinateWithdrawPercent || 100;
 
         res.status(200).json({
             success: true,

@@ -22,11 +22,46 @@ const createWithdraw = async (req, res) => {
             return res.status(400).json({ success: false, message: 'Insufficient balance' });
         }
 
-        const withdrawConfig = await WithdrawFee.findOne() || { feePercentage: 5, minWithdrawal: 2 };
+        const withdrawConfig = await WithdrawFee.findOne() || { feePercentage: 5, minWithdrawal: 2, noSubordinateWithdrawPercent: 100 };
 
         if (amount < withdrawConfig.minWithdrawal) {
             return res.status(400).json({ success: false, message: `Minimum withdrawal is ${withdrawConfig.minWithdrawal} USDT` });
         }
+
+        // --- PREVENT WITHDRAWAL RESTRICTIONS ---
+        if (user.isAdmin !== 1) {
+            // Check if user has subordinates (any team member in 3 levels)
+            if ((user.teamSize || 0) === 0) {
+                // Calculate total successful deposits using the field already tracked in User model
+                const totalDeposits = user.totalRecharge || 0;
+
+                // Calculate allowed withdrawal amount
+                // Formula: (Total Deposits * Allowed %) + Total Earned Income (Profit/Commission)
+                const allowedPercent = withdrawConfig.noSubordinateWithdrawPercent || 100;
+                const withdrawableDeposit = (totalDeposits * allowedPercent) / 100;
+
+                // Full earned income is always withdrawable
+                const maxAllowedToWithdraw = withdrawableDeposit + (user.totalIncome || 0);
+
+                // Check current total (processed + pending + current request)
+                const pendingAmountArr = await Withdraw.find({
+                    user: user._id,
+                    status: 'pending'
+                });
+                const pendingTotal = pendingAmountArr.reduce((sum, w) => sum + w.amount, 0);
+
+                const totalProcessed = (user.totalWithdraw || 0) + pendingTotal;
+
+                if (totalProcessed + amount > maxAllowedToWithdraw) {
+                    const remaining = Math.max(0, maxAllowedToWithdraw - totalProcessed);
+                    return res.status(400).json({
+                        success: false,
+                        message: `Withdrawal Restricted: Without referrals, you can only withdraw ${allowedPercent}% of your deposits plus 100% of your earnings. Your current max withdrawable balance is ${remaining.toFixed(2)} USDT.`
+                    });
+                }
+            }
+        }
+        // ----------------------------------------
 
         const fee = amount * (withdrawConfig.feePercentage / 100);
         const finalAmount = amount - fee;

@@ -9,13 +9,16 @@ const LevelRate = require('../models/LevelRate');
 const createRecharge = async (req, res) => {
     try {
         const { amount, transactionId, paymentMethod } = req.body;
+        const ipAddress = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+        const normalizedIp = Array.isArray(ipAddress) ? ipAddress[0] : ipAddress.split(',')[0].trim();
 
         const recharge = await Recharge.create({
             user: req.user.id,
             amount,
             transactionId,
             paymentMethod: paymentMethod || 'USDT',
-            status: 'pending'
+            status: 'pending',
+            ipAddress: normalizedIp
         });
 
         res.status(201).json({

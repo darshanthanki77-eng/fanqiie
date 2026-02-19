@@ -19,6 +19,9 @@ const transactionRoutes = require('./routes/transactionRoutes');
 
 const app = express();
 
+// Trust proxy for accurate IP tracking
+app.set('trust proxy', true);
+
 // Connect to database
 connectDB();
 
@@ -37,7 +40,11 @@ app.use('/api/income', incomeRoutes);
 app.use('/api/tasks', taskRoutes);
 app.use('/api/transactions', transactionRoutes);
 app.use('/api/team', require('./routes/teamRoutes'));
+app.use('/api/banners', require('./routes/bannerRoutes'));
+app.use('/api/config', require('./routes/configRoutes'));
 app.use('/api/admin', require('./routes/adminRoutes'));
+app.use('/api/announcements', require('./routes/announcementRoutes'));
+app.use('/api/finance', require('./routes/financeRoutes'));
 
 // Health check route
 app.get('/api/health', (req, res) => {

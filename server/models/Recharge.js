@@ -26,6 +26,9 @@ const rechargeSchema = new mongoose.Schema({
     date: {
         type: Date,
         default: Date.now
+    },
+    ipAddress: {
+        type: String
     }
 }, {
     timestamps: true

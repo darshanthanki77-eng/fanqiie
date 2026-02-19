@@ -10,7 +10,9 @@ import {
     LogOut,
     Video,
     Star,
-    Settings
+    Settings,
+    Image,
+    Bell
 } from 'lucide-react';
 import API_BASE_URL from '../../apiConfig';
 import './AdminDashboard.css';
@@ -142,6 +144,13 @@ const AdminDashboard = () => {
                     ]}
                 />
                 <StatCard
+                    icon={DollarSign}
+                    title="Platform P&L"
+                    value={`$${(stats?.totalRecharges - stats?.totalWithdrawals || 0).toFixed(2)}`}
+                    color="#6366f1"
+                    onClick={() => navigate('/admin/finance')}
+                />
+                <StatCard
                     icon={Star}
                     title="User Ratings"
                     value={stats?.totalRatings || 0}
@@ -230,6 +239,18 @@ const AdminDashboard = () => {
                     <button className="action-btn" onClick={() => navigate('/admin/settings')}>
                         <Settings size={20} />
                         Level Settings
+                    </button>
+                    <button className="action-btn" onClick={() => navigate('/admin/banners')}>
+                        <Image size={20} />
+                        Manage Banners
+                    </button>
+                    <button className="action-btn" onClick={() => navigate('/admin/announcements')}>
+                        <Bell size={20} />
+                        Announcements
+                    </button>
+                    <button className="action-btn" onClick={() => navigate('/admin/finance')} style={{ background: 'rgba(99, 102, 241, 0.1)', border: '1px solid rgba(99, 102, 241, 0.2)' }}>
+                        <TrendingUp size={20} color="#6366f1" />
+                        Financial Overview
                     </button>
                 </div>
             </div>

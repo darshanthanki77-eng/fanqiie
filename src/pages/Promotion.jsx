@@ -90,6 +90,10 @@ const Promotion = () => {
             {/* Header */}
             <div className="promo-header">
                 <h2>Promotion</h2>
+                <div className="qr-link" onClick={() => navigate('/downline-details')}>
+                    <span>Detailed Overview</span>
+                    <ChevronRight size={16} />
+                </div>
                 <div className="qr-link" onClick={() => navigate('/invite')}>
                     <span>Promotion QR Code</span>
                     <QrCode size={16} />
